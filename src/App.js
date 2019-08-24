@@ -5,11 +5,18 @@ const App = () => {
   const [password, setPassword] = useState('');
 
   const rules = {
-    characters: /.{10,}/,
+    characters: /.{8,}/,
     numbers: /.*[0-9].*/,
     lower: /[a-z]/,
     upper: /[A-Z]/
   }
+
+  const ruleDescription = [
+    "At least 8 characters", 
+    "At least 1 number",
+    "At least 1 lower case character",
+    "At least 1 upper case character"
+  ]
 
   const checkPass = reg => reg.test(password);
 
@@ -24,18 +31,11 @@ const App = () => {
       />
       <div className="rules">
         <ul>
-          <li className={checkPass(rules['lower']) ? "passed" : "missing"}>
-            1 lowercase character
+          {Object.keys(rules).map((r,i) =>
+            <li className={checkPass(rules[r]) ? "passed" : "missing"}>
+              {ruleDescription[i]}
             </li>
-          <li className={checkPass(rules['upper']) ? "passed" : "missing"}>
-            1 uppercase character
-            </li>
-          <li className={checkPass(rules['numbers']) ? "passed" : "missing"}>
-            1 number
-            </li>
-          <li className={checkPass(rules['characters']) ? "passed" : "missing"}>
-            8 minimum characters
-            </li>
+          )}
         </ul>
       </div>
       <button disabled={finalCheck() ? false : true}> Submit </button>

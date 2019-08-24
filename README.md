@@ -1,11 +1,11 @@
-A very simple password checker component, to practice hooks in React
+A very simple password checker component, to practice React hooks
 
-Download and run
+To see it, download all files and run
 
 ### `npm install`
 
 ### `npm start`
 
-Or simply navigate to 
+Or simply go here https://validation-4ssw5qcg1.now.sh
 
 

@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss'
 
-function App() {
+const App = () => {
+  const [password, setPassword] = useState('');
+
+  const rules = {
+    characters: /.{10,}/,
+    numbers: /.*[0-9].*/,
+    lower: /[a-z]/,
+    upper: /[A-Z]/
+  }
+
+  const checkPass = reg => reg.test(password);
+
+  const finalCheck = () => Object.keys(rules).map(e => checkPass(rules[e])).every(e => e)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <input
+        type="password"
+        placeholder="password check"
+        onChange={e => setPassword(e.target.value)}
+      />
+      <div className="rules">
+        <ul>
+          <li className={checkPass(rules['lower']) ? "passed" : "missing"}>
+            1 lowercase character
+            </li>
+          <li className={checkPass(rules['upper']) ? "passed" : "missing"}>
+            1 uppercase character
+            </li>
+          <li className={checkPass(rules['numbers']) ? "passed" : "missing"}>
+            1 number
+            </li>
+          <li className={checkPass(rules['characters']) ? "passed" : "missing"}>
+            8 minimum characters
+            </li>
+        </ul>
+      </div>
+      <button disabled={finalCheck() ? false : true}> Submit </button>
     </div>
   );
 }

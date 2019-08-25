@@ -4,23 +4,16 @@ import './App.scss'
 const App = () => {
   const [password, setPassword] = useState('');
 
-  const rules = {
-    characters: /.{8,}/,
-    numbers: /.*[0-9].*/,
-    lower: /[a-z]/,
-    upper: /[A-Z]/
-  }
-
-  const ruleDescription = [
-    "At least 8 characters", 
-    "At least 1 number",
-    "At least 1 lower case character",
-    "At least 1 upper case character"
+  const rules = [
+    { name: 'characters', regex: /.{8,}/, description: "At least 8 characters" },
+    { name: 'numbers', regex: /.*[0-9].*/, description: "At least 1 number" },
+    { name: 'lowercase', regex: /[a-z]/, description: "At least 1 lower case character" },
+    { name: 'uppercase', regex: /[A-Z]/, description: "At least 1 upper case character" }
   ]
 
-  const checkPass = reg => reg.test(password);
+  const checkPassword = regex => regex.test(password);
 
-  const finalCheck = () => Object.keys(rules).map(e => checkPass(rules[e])).every(e => e)
+  const finalCheck = () => rules.reduce((i, e) => checkPassword(e.regex))
 
   return (
     <div className="app">
@@ -31,9 +24,9 @@ const App = () => {
       />
       <div className="rules">
         <ul>
-          {Object.keys(rules).map((r,i) =>
-            <li className={checkPass(rules[r]) ? "passed" : "missing"}>
-              {ruleDescription[i]}
+          {rules.map((r, i) =>
+            <li className={checkPassword(r.regex) ? "passed" : "failed"}>
+              {r.description}
             </li>
           )}
         </ul>

@@ -31,7 +31,7 @@ const App = () => {
           )}
         </ul>
       </div>
-      <button disabled={finalCheck() ? false : true}> Submit </button>
+      <button disabled={finalCheck()}> Submit </button>
     </div>
   );
 }
